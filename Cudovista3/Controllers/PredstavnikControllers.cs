@@ -5,22 +5,24 @@ using CudovistaLib.DTOs;
 using System;
 
 namespace Cudovista3.Controllers
-
 {
 
-
+    [Route("[controller]")]
+    [ApiController]
+    public class PredstavnikControllers
+    {
         [Route("[controller]")]
         [ApiController]
-        public class ProtivmereControllers : ControllerBase
+        public class LegendeControllers : ControllerBase
         {
             [HttpGet]
-            [Route("PreuzmiProtivmere")]
+            [Route("PreuzmiLegende")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetSveProtivmere()
+            public IActionResult GetSvePredstavnike()
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiSveProtivmere());
+                    return new JsonResult(DataProvajderA.vratiSvePredstavnike());
                 }
                 catch (Exception ex)
                 {
@@ -29,13 +31,13 @@ namespace Cudovista3.Controllers
             }
 
             [HttpGet]
-            [Route("PreuzmiProtivmeru")]
+            [Route("PreuzmiPredstavnika")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetProtivmeru(int id)
+            public IActionResult GetPredstavnika(int id)
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiProtivmeru(id));
+                    return new JsonResult(DataProvajderA.vratiPredstavnika(id));
                 }
                 catch (Exception ex)
                 {
@@ -44,18 +46,21 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPost]
-            [Route("DodajProtivmeru/{idCudovista}")]
+            [Route("DodajPredstavnika/{idCudovista}/{idLokacije}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult AddProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] ProtivmereView m)
+            public IActionResult AddPredstavnika([FromRoute(Name = "idCudovista")] int idCudovista, [FromRoute(Name = "idLokacije")] int idLokacije, [FromBody] PredstavnikView m)
             {
                 try
                 {
-
                     var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
                     m.Id_cudovista = cudoviste;
-                    DataProvajderA.dodajProtivmeru(m);
-                    return Ok("Uspesno ste dodali protivmeru " + m.Naziv_protivmere);
+
+                   // var lokacija = DataProvajderA.vratiLokaciju(idLokacije);
+                    //m.Id_lokacije = lokacija;
+
+                    DataProvajderA.dodajPredstavnika(m);
+                    return Ok("Uspesno ste dodali lokaciju ");
                 }
                 catch (Exception ex)
                 {
@@ -64,17 +69,23 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPut]
-            [Route("PromeniProtivmeru/{idCudovista}")]
+            [Route("PromeniPredstavnika/{idCudovista}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult ChangeProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] ProtivmereView m)
+            public IActionResult ChangePredstavnika([FromRoute(Name = "idCudovista")] int idCudovista, [FromRoute(Name = "idLokacije")] int idLokacije, [FromBody] PredstavnikView m)
             {
                 try
                 {
+
                     var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
                     m.Id_cudovista = cudoviste;
-                    DataProvajderA.azurirajProtivmeru(m);
-                    return Ok("Uspesno ste azurirali protivmeru  " + m.Naziv_protivmere);
+
+                    // var lokacija = DataProvajderA.vratiLokaciju(idLokacije);
+                    //m.Id_lokacije = lokacija;
+
+
+                    DataProvajderA.azurirajPredstavnika(m);
+                    return Ok("Uspesno ste azurirali predstavnika");
                 }
                 catch (Exception ex)
                 {
@@ -82,22 +93,21 @@ namespace Cudovista3.Controllers
                 }
             }
             [HttpDelete]
-            [Route("IzbrisiProtivmeru/{id}")]
+            [Route("IzbrisiPredstavnka/{id}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult DeleteProtivmeru(int id)
+            public IActionResult DeletePredstavnika(int id)
             {
                 try
                 {
-                    DataProvajderA.obrisiProtivmeru(id);
-                    return Ok("Uspesno ste obrisali protivmeru");
+                    DataProvajderA.obrisiPredstavnika(id);
+                    return Ok("Uspesno ste obrisali predstavnika");
                 }
                 catch (Exception ex)
                 {
                     return BadRequest(ex.ToString());
                 }
             }
-
         }
- }
-
+    }
+}

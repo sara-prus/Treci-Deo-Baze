@@ -19,7 +19,7 @@ namespace CudovistaLib.DTOs
         public MaterijalView(Materijal m)
         {
             this.ID = m.ID;
-            //this.Pripada_predmetu = new PredmetView(m.Pripada_predmetu);
+            this.Pripada_predmetu = new PredmetView(m.Pripada_predmetu);
             this.Tip_Materijala = m.Tip_Materijala;
         }
 

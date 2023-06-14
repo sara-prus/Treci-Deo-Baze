@@ -11,7 +11,7 @@ namespace Cudovista3.Controllers
     [ApiController]
     public class BajaliceControllers : ControllerBase
     {
-         
+
 
         [HttpPost]
         [Route("DodajBajalicu/{cudovisteID}")]
@@ -32,6 +32,6 @@ namespace Cudovista3.Controllers
                 return BadRequest(ex.ToString());
             }
         }
-        
+
     }
 }

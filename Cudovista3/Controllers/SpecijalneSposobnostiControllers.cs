@@ -5,22 +5,21 @@ using CudovistaLib.DTOs;
 using System;
 
 namespace Cudovista3.Controllers
-
 {
-
-
+    public class SpecijalneSposobnostiControllers
+    {
         [Route("[controller]")]
         [ApiController]
         public class ProtivmereControllers : ControllerBase
         {
             [HttpGet]
-            [Route("PreuzmiProtivmere")]
+            [Route("PreuzmiSpecijalneSposobnosti")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetSveProtivmere()
+            public IActionResult GetSveSpecijalneSposobnosti()
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiSveProtivmere());
+                    return new JsonResult(DataProvajderA.vratiSveSpecijalneSposobnosti());
                 }
                 catch (Exception ex)
                 {
@@ -29,13 +28,13 @@ namespace Cudovista3.Controllers
             }
 
             [HttpGet]
-            [Route("PreuzmiProtivmeru")]
+            [Route("PreuzmiSpecijalnuSposobnost")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetProtivmeru(int id)
+            public IActionResult GetSpecijalneSposobnost(int id)
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiProtivmeru(id));
+                    return new JsonResult(DataProvajderA.vratiSpecijalnuSposobnost(id));
                 }
                 catch (Exception ex)
                 {
@@ -44,18 +43,18 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPost]
-            [Route("DodajProtivmeru/{idCudovista}")]
+            [Route("DodajSpecijalnuSposobnost/{idCudovista}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult AddProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] ProtivmereView m)
+            public IActionResult AddProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] Specijalne_sposobnostiView m)
             {
                 try
                 {
 
                     var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
                     m.Id_cudovista = cudoviste;
-                    DataProvajderA.dodajProtivmeru(m);
-                    return Ok("Uspesno ste dodali protivmeru " + m.Naziv_protivmere);
+                    DataProvajderA.dodajSpecijalnuSposobnost(m);
+                    return Ok("Uspesno ste dodali Specijalnu Sposobnost " + m.Spec_sposobnosti);
                 }
                 catch (Exception ex)
                 {
@@ -64,17 +63,17 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPut]
-            [Route("PromeniProtivmeru/{idCudovista}")]
+            [Route("PromeniSpecijalnuSposobnost/{idCudovista}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult ChangeProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] ProtivmereView m)
+            public IActionResult ChangeProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] Specijalne_sposobnostiView m)
             {
                 try
                 {
                     var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
                     m.Id_cudovista = cudoviste;
-                    DataProvajderA.azurirajProtivmeru(m);
-                    return Ok("Uspesno ste azurirali protivmeru  " + m.Naziv_protivmere);
+                    DataProvajderA.azurirajSpecijalnuSposobnost(m);
+                    return Ok("Uspesno ste azurirali protivmeru  " + m.Spec_sposobnosti);
                 }
                 catch (Exception ex)
                 {
@@ -82,15 +81,15 @@ namespace Cudovista3.Controllers
                 }
             }
             [HttpDelete]
-            [Route("IzbrisiProtivmeru/{id}")]
+            [Route("IzbrisiSpecijalnuSposobnost/{id}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             public IActionResult DeleteProtivmeru(int id)
             {
                 try
                 {
-                    DataProvajderA.obrisiProtivmeru(id);
-                    return Ok("Uspesno ste obrisali protivmeru");
+                    DataProvajderA.obrisiSpecijalnuSposobnosti(id);
+                    return Ok("Uspesno ste obrisali Specijalnu Sposobnost");
                 }
                 catch (Exception ex)
                 {
@@ -99,5 +98,5 @@ namespace Cudovista3.Controllers
             }
 
         }
- }
-
+    }
+}
