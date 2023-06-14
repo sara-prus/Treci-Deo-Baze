@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.DTOs
 {
-    internal class BajaliceView
+    public class BajaliceView
     {
         public virtual int ID { get; set; }
         public virtual string Bajalica { get; set; }
@@ -18,6 +18,7 @@ namespace CudovistaLib.DTOs
         {
             ID = bajalica.ID;
             Bajalica=bajalica.Bajalica;
+            Id_cudovista = new CudovisteView(bajalica.Id_cudovista);
         }
     }
 }

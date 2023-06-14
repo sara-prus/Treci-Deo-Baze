@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.DTOs
 {
-    internal class CudovisteView
+    public class CudovisteView
     {
         public virtual int ID { get; set; }
         public virtual int Vek { get; set; }
         public virtual string Naziv_cudovista { get; set; }
         public virtual string Podtip { get; set; }
+        /*public virtual IList<ProtivmereView> Protivmere { get; set; }
+        public virtual IList<PredmetView> Predmeti { get; set; }
+        public virtual IList<PredstavnikView> Predstavnici { get; set; }
+        public virtual IList<LegendeView> Legende { get; set; }*/
+        public virtual IList<BajaliceView> Bajalice { get; set; }
 
-        public CudovisteView() { }
+        public CudovisteView()
+        {
+            Bajalice= new List<BajaliceView>();
+        }
         public CudovisteView(Cudoviste cudoviste)
         {
             ID=cudoviste.ID;
