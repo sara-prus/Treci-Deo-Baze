@@ -17,13 +17,13 @@ namespace CudovistaLib.DTOs
         public PredstavnikView Borio_se;
 
         public IList<ZastitaView> Zastite;
-        //public IList<Zivi_naView> ZivePredstavnici;
+        public IList<Zivi_naView> ZivePredstavnici;
 
 
         public LokacijaView()
         {
              Zastite = new List<ZastitaView>();
-            //ZivePredstavnici = new List<Zivi_naView>();
+            ZivePredstavnici = new List<Zivi_naView>();
 
         }
 

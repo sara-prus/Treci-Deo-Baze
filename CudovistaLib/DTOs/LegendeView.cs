@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.DTOs
 {
-    internal class LegendeView
+    public class LegendeView
     {
 
-        public int ID;
-        public string Tekst;
-        public DateTime Prvo_pominjanje;
-        public string Zemlja_porekla;
-        public CudovisteView Id_cudovista;
+        public virtual int ID { get; set; }
+        public virtual string Tekst { get; set; }
+        public virtual DateTime Prvo_pominjanje { get; set; }
+        public  virtual string Zemlja_porekla { get; set; }
+        public virtual CudovisteView Id_cudovista { get; set; }
 
         public LegendeView()
         {
