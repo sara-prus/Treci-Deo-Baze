@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\BajaliceController.cs" />
+    <Compile Remove="Controllers\BajaliceControllers.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Controllers\BajaliceController.cs" />
+    <None Include="Controllers\BajaliceControllers.cs" />
   </ItemGroup>
 
   <ItemGroup>

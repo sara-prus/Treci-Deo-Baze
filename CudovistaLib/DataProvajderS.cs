@@ -1,4 +1,5 @@
-﻿using CudovistaLib.DTOs;
+﻿using CudovistaLib;
+using CudovistaLib.DTOs;
 using CudovistaLib.Entiteti;
 using NHibernate;
 using System;
@@ -10,8 +11,54 @@ using static CudovistaLib.Entiteti.Lokacija;
 
 namespace CudovistaLib
 {
+   
+    
     public class DataProvajderS
+
     {
+    public static CudovisteView VratiCudoviste(int idCudovista)
+    {
+        CudovisteView cudoviste;
+        try
+        {
+            ISession s = DataLayer.GetSession();
+            Cudoviste o = s.Load<Cudoviste>(idCudovista);
+            cudoviste = new CudovisteView(o);
+
+            s.Close();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        return cudoviste;
+    }
+        public static List<CudovisteView> VratiSvaCudovista()
+        {
+            List<CudovisteView> magijska = new List<CudovisteView>();
+
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                IEnumerable<Cudoviste> svaMagijska = from o in s.Query<Cudoviste>()
+                                                              select o;
+
+                foreach (Cudoviste m in svaMagijska)
+                {
+                    magijska.Add(new CudovisteView(m));
+                }
+
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+
+            return magijska;
+        }
         #region Cudovista
         public static MagijskoView VratiMagijskoCudoviste(int idCudovista)
         {

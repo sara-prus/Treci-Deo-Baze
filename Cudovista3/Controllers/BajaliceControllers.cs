@@ -9,9 +9,9 @@ namespace Cudovista3.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BajaliceController : ControllerBase
+    public class BajaliceControllers : ControllerBase
     {
-         Bajalice Kontroleri
+         
 
         [HttpPost]
         [Route("DodajBajalicu/{cudovisteID}")]

@@ -9,9 +9,24 @@ namespace Cudovista3.Controllers
    
     [Route("[controller]")]
     [ApiController]
-    #region Magijska
+    
     public class CudovistaControllers : ControllerBase
     {
+        #region Cudovista
+        [HttpGet]
+        [Route("PreuzmiSvaCudovista")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetSva()
+        {
+            try
+            {
+                return new JsonResult(DataProvajderS.VratiSvaCudovista());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
         [HttpGet]
         [Route("PreuzmiMagijska")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -26,6 +41,9 @@ namespace Cudovista3.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+        #endregion
+
+        #region Magijska
         [HttpGet]
         [Route("PreuzmiMagijsko")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -91,6 +109,7 @@ namespace Cudovista3.Controllers
             }
         }
         #endregion
+
     #region Bajalice Kontroleri
 
         [HttpPost]
@@ -193,6 +212,7 @@ namespace Cudovista3.Controllers
             }
         }
         #endregion
+
         #region Sposobnosti
         [HttpGet]
         [Route("PreuzmiSposobnosti/{cudovisteID}")]
@@ -229,5 +249,6 @@ namespace Cudovista3.Controllers
             }
         }
         #endregion
+        
     }
 }
