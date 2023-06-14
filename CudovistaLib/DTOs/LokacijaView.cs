@@ -14,15 +14,15 @@ namespace CudovistaLib.DTOs
         public virtual string Tip_lokacije { get; set; }
         public virtual string Zemlja { get; set; }
         public virtual string Blago { get; set; }
-        //public PredstavnikView Borio_se;
+        public PredstavnikView Borio_se;
 
-        // public IList<ZastitaView> Zastite;
+        public IList<ZastitaView> Zastite;
         //public IList<Zivi_naView> ZivePredstavnici;
 
 
         public LokacijaView()
         {
-            // Zastite = new List<ZastitaView>();
+             Zastite = new List<ZastitaView>();
             //ZivePredstavnici = new List<Zivi_naView>();
 
         }
@@ -34,7 +34,7 @@ namespace CudovistaLib.DTOs
             Tip_lokacije = l.Tip_lokacije;
             Zemlja = l.Zemlja;
             Blago = l.Blago;
-           // this.Borio_se = new PredstavnikView(l.Borio_se);
+            this.Borio_se = new PredstavnikView(l.Borio_se);
           
     }
 
