@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.DTOs
 {
-    internal class PredmetView
+    public class PredmetView
     {
     }
 }

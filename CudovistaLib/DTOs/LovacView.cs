@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.DTOs
 {
-    public class PredstavnikView
+    internal class LovacView
     {
     }
 }
