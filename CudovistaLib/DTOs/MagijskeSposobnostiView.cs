@@ -13,7 +13,7 @@ namespace CudovistaLib.DTOs
         public virtual string Naziv_sposobnosti { get; set; }
         public virtual int Da_li_je_odbrambena { get; set; }
         public virtual string Opis_sposobnosti { get; set; }
-        public virtual MagijskoView Id_cudovista { get; set; }
+        public virtual MagijskoView? Id_cudovista { get; set; }
         public MagijskeSposobnostiView() { }
         public MagijskeSposobnostiView(Magijske_sposobnosti magijske)
         { 

@@ -91,7 +91,28 @@ namespace Cudovista3.Controllers
             }
         }
         #endregion
-   
+    #region Bajalice Kontroleri
+
+        [HttpPost]
+        [Route("DodajBajalicu/{cudovisteID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddBajalica([FromRoute(Name = "cudovisteID")] int cudovisteID, [FromBody] BajaliceView o)
+        {
+            try
+            {
+               // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
+                
+                DataProvajderS.SacuvajBajalicu(o,cudovisteID);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+        #endregion
 
     #region Nemagijska
         [HttpGet]
@@ -165,6 +186,42 @@ namespace Cudovista3.Controllers
             {
                 DataProvajderS.ObrisiNemagijskoCudoviste(id);
                 return Ok("Uspesno ste orbisali nemagijsko cudoviste");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+        #endregion
+        #region Sposobnosti
+        [HttpGet]
+        [Route("PreuzmiSposobnosti/{cudovisteID}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult GetSposobnosti(int cudovisteID)
+        {
+            try
+            {
+                return new JsonResult(DataProvajderS.VratiSposobnosti(cudovisteID));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+      
+        [HttpPost]
+        [Route("DodajSposobnostMagijsku/{cudovisteID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddSposobnost([FromRoute(Name = "cudovisteID")] int cudovisteID, [FromBody] MagijskeSposobnostiView o)
+        {
+            try
+            {
+                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
+
+                DataProvajderS.SacuvajSposobnost(o, cudovisteID);
+
+                return Ok("Uspesno ste dodali sposobnost "+o.Naziv_sposobnosti +"magijskom cudovistu");
             }
             catch (Exception ex)
             {

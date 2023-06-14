@@ -276,5 +276,83 @@ namespace CudovistaLib
             }
         }
         #endregion
+        #region Magijske sposobnosti
+        public static List<MagijskeSposobnostiView> VratiSposobnosti(int idCudovista)
+        {
+            List<MagijskeSposobnostiView> info= new List<MagijskeSposobnostiView> ();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                IEnumerable<Magijske_sposobnosti> sposobnosti = from o in s.Query<Magijske_sposobnosti>()
+                                                      where o.Id_cudovista.ID == idCudovista
+                                                              select o;
+
+
+                foreach (Magijske_sposobnosti o in sposobnosti)
+                {
+                    var sp = new MagijskeSposobnostiView(o)
+                    {
+                        Id_cudovista = new MagijskoView(o.Id_cudovista)
+                    };
+
+                    info.Add(sp);
+                }
+                s.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return info;
+        }
+        public static void DodajSposobnost(MagijskeSposobnostiView sposobnost, int idCudovista)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Magijske_sposobnosti o = new Magijske_sposobnosti();
+                Magijsko_cudoviste p = s.Load<Magijsko_cudoviste>(idCudovista);
+                o.ID = sposobnost.ID;
+                o.Naziv_sposobnosti = sposobnost.Naziv_sposobnosti;
+                o.Da_li_je_odbrambena = sposobnost.Da_li_je_odbrambena;
+                o.Opis_sposobnosti = sposobnost.Opis_sposobnosti;
+
+                s.Save(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+        public static void SacuvajSposobnost(MagijskeSposobnostiView spos, int idCudovista)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Magijske_sposobnosti o = new Magijske_sposobnosti();
+                Magijsko_cudoviste p = s.Load<Magijsko_cudoviste>(idCudovista);
+
+                o.Naziv_sposobnosti = spos.Naziv_sposobnosti;
+                o.Opis_sposobnosti = spos.Opis_sposobnosti;
+                o.Da_li_je_odbrambena = spos.Da_li_je_odbrambena;
+                o.Id_cudovista = p;
+
+                s.Save(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+        #endregion
     }
 }
