@@ -9,11 +9,11 @@ namespace CudovistaLib.DTOs
 {
     public class ProtivmereView
     {
-        public int ID;
-        public string Naziv_protivmere;
-        public string Opis_protivmere;
-        public int Da_li_uslovi;
-        public CudovisteView Id_cudovista;
+        public virtual int ID { get; set; }
+        public virtual string Naziv_protivmere { get; set; }
+        public virtual string Opis_protivmere { get; set; }
+        public virtual int Da_li_uslovi { get; set; }
+        public virtual  CudovisteView Id_cudovista { get; set; }
 
         public ProtivmereView()
         {
