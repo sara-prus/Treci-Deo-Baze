@@ -19,11 +19,11 @@ namespace CudovistaLib.Entiteti
 
         public Cudoviste()
         {
-       /*     Protivmere = new List<Protivmere>();
+            Protivmere = new List<Protivmere>();
             Predmeti = new List<Predmet>();
             Predstavnici = new List<Predstavnik>();
             Legende = new List<Legende>();
-            Bajalice = new List<Bajalice>();*/
+            Bajalice = new List<Bajalice>();
 
         }
     }
