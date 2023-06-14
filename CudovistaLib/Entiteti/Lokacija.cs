@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cudovista.Entiteti
+namespace CudovistaLib.Entiteti
 {
     public abstract class Lokacija
     {

@@ -1,5 +1,6 @@
 ﻿using FluentNHibernate.Mapping;
 using CudovistaLib.Entiteti;
+
 namespace CudovistaLib.Mapiranja
 {
     public class Magijsko_cudovisteMapiranja : SubclassMap<Magijsko_cudoviste>
