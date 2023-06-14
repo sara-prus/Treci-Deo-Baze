@@ -9,7 +9,7 @@ namespace CudovistaLib.Mapiranja
         {
             Table("Bajalice");
 
-            Id(x => x.ID, "ID").GeneratedBy.SequenceIdentity();
+            Id(x => x.ID, "ID").GeneratedBy.TriggerIdentity();
 
             Map(x => x.Bajalica).Column("Bajalica");
             References(x => x.Id_cudovista).Column("Id_cudovista").LazyLoad();

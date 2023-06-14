@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\BajaliceController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Controllers\BajaliceController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentNHibernate" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
     <PackageReference Include="NHibernate" Version="5.4.2" />

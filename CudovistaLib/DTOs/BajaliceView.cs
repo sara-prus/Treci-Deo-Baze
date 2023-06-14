@@ -11,7 +11,7 @@ namespace CudovistaLib.DTOs
     {
         public virtual int ID { get; set; }
         public virtual string Bajalica { get; set; }
-        public virtual CudovisteView Id_cudovista { get; set; }
+        public virtual CudovisteView? Id_cudovista { get; set; }
 
         public BajaliceView() { }
         public BajaliceView(Bajalice bajalica)
