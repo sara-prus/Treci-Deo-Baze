@@ -14,10 +14,10 @@ namespace CudovistaLib.DTOs
         public virtual string Tip_lokacije { get; set; }
         public virtual string Zemlja { get; set; }
         public virtual string Blago { get; set; }
-        public PredstavnikView Borio_se;
+        public PredstavnikView? Borio_se;
 
-        public IList<ZastitaView> Zastite;
-        public IList<Zivi_naView> ZivePredstavnici;
+        public IList<ZastitaView>? Zastite;
+        public IList<Zivi_naView>? ZivePredstavnici;
 
 
         public LokacijaView()

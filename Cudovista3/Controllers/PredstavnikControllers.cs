@@ -9,12 +9,10 @@ namespace Cudovista3.Controllers
 
     [Route("[controller]")]
     [ApiController]
-    public class PredstavnikControllers
+    public class PredstavnikControllers : ControllerBase
     {
-        [Route("[controller]")]
-        [ApiController]
-        public class LegendeControllers : ControllerBase
-        {
+      
+        
             [HttpGet]
             [Route("PreuzmiLegende")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,6 +94,6 @@ namespace Cudovista3.Controllers
                     return BadRequest(ex.ToString());
                 }
             }
-        }
+        
     }
 }

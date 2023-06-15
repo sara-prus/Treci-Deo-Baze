@@ -10,7 +10,8 @@ namespace CudovistaLib.Mapiranja
             Table("LOKACIJA");
 
             Id(x => x.ID, "ID").GeneratedBy.TriggerIdentity();
-            DiscriminateSubClassesOnColumn("Tip_lokacije");
+           // DiscriminateSubClassesOnColumn("Tip_lokacije");
+            Map(x => x.Tip_lokacije).Column("TIP_LOKACIJE");
             Map(x => x.Naziv_lokacije).Column("NAZIV_LOKACIJE");
             // Map(x => x.tip).Column("Tip_lokacije");
             Map(x => x.Zemlja).Column("ZEMLJA");
@@ -23,7 +24,7 @@ namespace CudovistaLib.Mapiranja
         }
     }
 
-    class GrobnicaMapiranja : SubclassMap<Lokacija>
+   /* class GrobnicaMapiranja : SubclassMap<Lokacija>
     {
         public GrobnicaMapiranja()
         {
@@ -65,4 +66,5 @@ namespace CudovistaLib.Mapiranja
             DiscriminatorValue("Ukleti_zamak");
         }
     }
+   */
 }

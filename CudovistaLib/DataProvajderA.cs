@@ -648,7 +648,7 @@ namespace CudovistaLib
                 ISession s = DataLayer.GetSession();
 
                 IEnumerable<Lovac> sviLovci = from o in s.Query<Lovac>()
-                                                                               select o;
+                                              select o;
 
                 foreach (Lovac p in sviLovci)
                 {
