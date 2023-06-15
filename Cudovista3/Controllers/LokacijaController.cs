@@ -10,111 +10,19 @@ namespace Cudovista3.Controllers
     [ApiController]
     public class LokacijaController : ControllerBase
     {
-        [HttpGet]
-        [Route("PreuzmiLokacije")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetSveLokacije()
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.VratiSveLokacije());
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-        [HttpGet]
-        [Route("PreuzmiOstrvo")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetOstrvo(int id)
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.vratiOstrvo(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-        [HttpGet]
-        [Route("PreuzmiPecinu")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetPecinu(int id)
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.vratiPecina(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-        [HttpGet]
-        [Route("PreuzmiGradDuhova")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetGradDuhova(int id)
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.vratiGradDuhova(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-
-        [HttpGet]
-        [Route("PreuzmiPiramida")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetPiramida(int id)
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.vratiPiramidu(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-        [HttpGet]
-        [Route("PreuzmiUkletiZamak")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult GetUkletiZamak(int id)
-        {
-            try
-            {
-                return new JsonResult(DataProvajderA.vratiUkletiZamak(id));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-
-        [HttpPost]
-        [Route("DodajOstrvo/{idPredstavnika}")]
+        [HttpPut]
+        [Route("DodajZastituLokaciji/{idLokacije}/{idZastite}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddLegendu([FromRoute(Name = "idPredstavnika")] int idPredstavnika, [FromBody] OstrvoView m)
+        public IActionResult AddLocationProtection([FromRoute(Name = "idLokacije")] int idLokacije, [FromRoute(Name = "idZastite")] int idZastite)
         {
             try
             {
-                var cudoviste = DataProvajderS.VratiCudoviste(idPredstavnika);
-                m.Id_cudovista = cudoviste;
+                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
 
-                DataProvajderA.dodajLegendu(m);
-                return Ok("Uspesno ste dodali Legendu " + m.Zemlja_porekla);
+                DataProvajderA.SacuvajLokacijuZastita(idLokacije, idZastite);
+
+                return Ok("uspesno ste dodali materijal premetu");
             }
             catch (Exception ex)
             {
@@ -122,6 +30,45 @@ namespace Cudovista3.Controllers
             }
         }
 
-       
+        [HttpPut]
+        [Route("DodajBorbuLokaciji/{idLokacije}/{idPredstavnika}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddLocationFight([FromRoute(Name = "idLokacije")] int idLokacije, [FromRoute(Name = "idPredstavnika")] int idPredstavnika)
+        {
+            try
+            {
+                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
+
+                DataProvajderA.SacuvajLokacijuBorba(idLokacije, idPredstavnika);
+
+                return Ok("uspesno ste dodali materijal premetu");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPut]
+        [Route("DodajPredstavnikaLokaciji/{idLokacije}/{idPredstavnika}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddLocationMember([FromRoute(Name = "idLokacije")] int idLokacije, [FromRoute(Name = "idPredstavnika")] int idPredstavnika)
+        {
+            try
+            {
+                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
+
+                DataProvajderA.SacuvajLokacijuPredstavnikZivi(idLokacije, idPredstavnika);
+
+                return Ok("uspesno ste dodali materijal premetu");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
     }
 }

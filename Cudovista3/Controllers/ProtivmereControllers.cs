@@ -52,9 +52,8 @@ namespace Cudovista3.Controllers
                 try
                 {
 
-                    var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                    m.Id_cudovista = cudoviste;
-                    DataProvajderA.dodajProtivmeru(m);
+                   
+                    DataProvajderA.dodajProtivmeru(m, idCudovista);
                     return Ok("Uspesno ste dodali protivmeru " + m.Naziv_protivmere);
                 }
                 catch (Exception ex)
@@ -71,9 +70,8 @@ namespace Cudovista3.Controllers
             {
                 try
                 {
-                    var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                    m.Id_cudovista = cudoviste;
-                    DataProvajderA.azurirajProtivmeru(m);
+                  
+                    DataProvajderA.azurirajProtivmeru(m, idCudovista);
                     return Ok("Uspesno ste azurirali protivmeru  " + m.Naziv_protivmere);
                 }
                 catch (Exception ex)

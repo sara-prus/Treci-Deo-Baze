@@ -15,7 +15,7 @@ namespace Cudovista3.Controllers
         [ApiController]
         public class LegendeControllers : ControllerBase
         {
-            /*[HttpGet]
+            [HttpGet]
             [Route("PreuzmiLegende")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             public IActionResult GetSvePredstavnike()
@@ -28,7 +28,7 @@ namespace Cudovista3.Controllers
                 {
                     return BadRequest(ex.ToString());
                 }
-            }*/
+            }
 
             [HttpGet]
             [Route("PreuzmiPredstavnika")]
@@ -53,14 +53,9 @@ namespace Cudovista3.Controllers
             {
                 try
                 {
-                    var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                    m.Id_cudovista = cudoviste;
 
-                   // var lokacija = DataProvajderA.vratiLokaciju(idLokacije);
-                    //m.Id_lokacije = lokacija;
-
-                    DataProvajderA.dodajPredstavnika(m);
-                    return Ok("Uspesno ste dodali lokaciju ");
+                    DataProvajderA.dodajPredstavnika(m, idCudovista, idLokacije);
+                    return Ok("Uspesno ste dodali predstavnika ");
                 }
                 catch (Exception ex)
                 {
@@ -69,20 +64,13 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPut]
-            [Route("PromeniPredstavnika/{idCudovista}")]
+            [Route("PromeniPredstavnika")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult ChangePredstavnika([FromRoute(Name = "idCudovista")] int idCudovista, [FromRoute(Name = "idLokacije")] int idLokacije, [FromBody] PredstavnikView m)
+            public IActionResult ChangePredstavnika([FromBody] PredstavnikView m)
             {
                 try
                 {
-
-                    var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                    m.Id_cudovista = cudoviste;
-
-                    // var lokacija = DataProvajderA.vratiLokaciju(idLokacije);
-                    //m.Id_lokacije = lokacija;
-
 
                     DataProvajderA.azurirajPredstavnika(m);
                     return Ok("Uspesno ste azurirali predstavnika");

@@ -46,10 +46,8 @@ namespace Cudovista3.Controllers
         {
             try
             {
-                var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                 m.Id_cudovista = cudoviste;
 
-                DataProvajderA.dodajLegendu(m);
+                DataProvajderA.dodajLegendu(m, idCudovista);
                 return Ok("Uspesno ste dodali Legendu " + m.Zemlja_porekla);
             }
             catch (Exception ex)
@@ -67,11 +65,8 @@ namespace Cudovista3.Controllers
             try
             {
 
-                var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                m.Id_cudovista = cudoviste;
 
-
-                DataProvajderA.azurirajLegendu(m);
+                DataProvajderA.azurirajLegendu(m, idCudovista);
                 return Ok("Uspesno ste azurirali Legendu  " + m.Zemlja_porekla);
             }
             catch (Exception ex)

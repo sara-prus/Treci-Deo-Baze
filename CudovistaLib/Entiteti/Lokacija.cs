@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.Entiteti
 {
-    public abstract class Lokacija
+    public  class Lokacija
     {
         public virtual int ID { get; set; }
         public virtual string Naziv_lokacije { get; set; }
@@ -16,6 +16,8 @@ namespace CudovistaLib.Entiteti
         public virtual Predstavnik Borio_se { get; set; }
         public virtual IList<Zastita> Zastite { get; set; }
         public virtual IList<Zivi_na> ZivePredstavnici { get; set; } //ne diraj dovrsicu jos ovo m
+      
+        /*
         public class Grobnica : Lokacija
         {
 
@@ -40,6 +42,8 @@ namespace CudovistaLib.Entiteti
         {
 
         }
+
+        */
 
         public Lokacija()
         {

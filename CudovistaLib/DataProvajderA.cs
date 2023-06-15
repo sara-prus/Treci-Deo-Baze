@@ -10,7 +10,7 @@ using static CudovistaLib.Entiteti.Lokacija;
 
 namespace CudovistaLib
 {
-    public  class DataProvajderA
+    public class DataProvajderA
     {
         public static List<ProtivmereView> vratiSveProtivmere()
         {
@@ -19,7 +19,7 @@ namespace CudovistaLib
             {
                 ISession s = DataLayer.GetSession();
                 IEnumerable<Protivmere> sveProtivmere = from o in s.Query<Protivmere>()
-                select o;
+                                                        select o;
 
                 foreach (Protivmere p in sveProtivmere)
                 {
@@ -36,9 +36,9 @@ namespace CudovistaLib
             return protivmere;
         }
 
-        public static void dodajProtivmeru(ProtivmereView p)
+        public static void dodajProtivmeru(ProtivmereView p, int idCudovista)
         {
-            
+
             try
             {
                 ISession s = DataLayer.GetSession();
@@ -48,7 +48,7 @@ namespace CudovistaLib
                 o.Naziv_protivmere = p.Naziv_protivmere;
                 o.Opis_protivmere = p.Opis_protivmere;
                 o.Da_li_uslovi = p.Da_li_uslovi;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
 
                 s.SaveOrUpdate(o);
@@ -63,7 +63,7 @@ namespace CudovistaLib
             }
         }
 
-        public static ProtivmereView azurirajProtivmeru(ProtivmereView p)
+        public static ProtivmereView azurirajProtivmeru(ProtivmereView p, int idCudovista)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace CudovistaLib
                 o.Naziv_protivmere = p.Naziv_protivmere;
                 o.Opis_protivmere = p.Opis_protivmere;
                 o.Da_li_uslovi = p.Da_li_uslovi;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
 
                 s.Update(o);
@@ -137,7 +137,7 @@ namespace CudovistaLib
                 ISession s = DataLayer.GetSession();
 
                 IEnumerable<Legende> sveLegende = from o in s.Query<Legende>()
-                                                                     select o;
+                                                  select o;
 
                 foreach (Legende p in sveLegende)
                 {
@@ -180,7 +180,7 @@ namespace CudovistaLib
             }
         }
 
-        public static LegendeView azurirajLegendu(LegendeView p)
+        public static LegendeView azurirajLegendu(LegendeView p, int idCudovista)
         {
             try
             {
@@ -191,7 +191,7 @@ namespace CudovistaLib
                 o.Tekst = p.Tekst;
                 o.Prvo_pominjanje = p.Prvo_pominjanje;
                 o.Zemlja_porekla = p.Zemlja_porekla;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
 
                 s.Update(o);
@@ -246,6 +246,7 @@ namespace CudovistaLib
             }
         }
         #endregion Legende
+        #region Specijalna Sposobnost
 
         public static List<Specijalne_sposobnostiView> vratiSveSpecijalneSposobnosti()
         {
@@ -255,7 +256,7 @@ namespace CudovistaLib
                 ISession s = DataLayer.GetSession();
 
                 IEnumerable<Specijalne_sposobnosti> sveSpecijalneSposobnosti = from o in s.Query<Specijalne_sposobnosti>()
-                                                                                                  select o;
+                                                                               select o;
 
                 foreach (Specijalne_sposobnosti p in sveSpecijalneSposobnosti)
                 {
@@ -362,590 +363,143 @@ namespace CudovistaLib
             }
         }
 
-        #region Ostrvo
-        public static void obrisiOstrvo(int id)
+        #endregion Specijalna Sposobnost
+
+        #region Lokacija
+        public static void SacuvajLokacijuBorba(int idLokacije, int idPredstavnika)
         {
             try
             {
                 ISession s = DataLayer.GetSession();
 
-                Ostrvo lokacija = s.Load<Ostrvo>(id);
+                Predstavnik o = s.Load<Predstavnik>(idPredstavnika);
+                Lokacija p = s.Load<Lokacija>(idLokacije);
 
-                s.Delete(lokacija);
+                p.Borio_se = o;
+
+                s.Save(p);
                 s.Flush();
-
-
-
                 s.Close();
-
             }
-            catch (Exception ec)
+            catch (Exception)
             {
                 //handle exceptions
+                throw;
             }
-
-
         }
 
-        public static List<LokacijaView> VratiSveLokacije()
+    
+
+        public static void SacuvajLokacijuZastita(int idLokacije, int idPredstavnika)
         {
-            List<LokacijaView> odInfos = new List<LokacijaView>();
             try
             {
                 ISession s = DataLayer.GetSession();
 
-                IEnumerable<Lokacija> lokacije = from o in s.Query<Lokacija>()
-                                                 select o;
+                Predstavnik o = s.Load<Predstavnik>(idPredstavnika);
+                Lokacija p = s.Load<Lokacija>(idLokacije);
 
-                foreach (Lokacija o in lokacije)
+                Zivi_na z = new Zivi_na();
+                z.LokacijaZivota = p;
+                z.PredstavnikZivi = o;
+
+                p.ZivePredstavnici.Add(z);
+
+                s.Save(p);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+
+        public static void SacuvajLokacijuPredstavnikZivi(int idLokacije, int idZastite)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Zastita o = s.Load<Zastita>(idZastite);
+                Lokacija p = s.Load<Lokacija>(idLokacije);
+
+                p.Zastite.Add(o);
+
+                s.Save(p);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+
+        //--provera za materijal pomocan metoda
+        public static string GetLokacijaValue(string lokacija)
+        {
+            string[] validLocations = { "Pecina", "Ostrvo", "Grad duhova", "Piramida", "Ukleti zamak" };
+
+            for (int i = 0; i < validLocations.Length; i++)
+            {
+                if (string.Equals(validLocations[i], lokacija, StringComparison.OrdinalIgnoreCase))
+                    return validLocations[i];
+            }
+
+            return ""; // Return "" if the material is invalid
+        }
+
+
+        public static void DodajLokaciju(LokacijaView lokacija, int idPredstavnika, int idZastite, string lokacijaStr)
+        {
+            try
+            {
+                string lokacijaValue = GetLokacijaValue(lokacijaStr);
+                if (lokacijaValue != "")
                 {
-                    odInfos.Add(new LokacijaView(o));
+
+                    ISession s = DataLayer.GetSession();
+
+                    Lokacija p = new Lokacija();
+                    Predstavnik c = s.Load<Predstavnik>(idPredstavnika);
+                    Zastita m = s.Load<Zastita>(idZastite);
+
+                    Zivi_na z = new Zivi_na();
+                    z.LokacijaZivota = p;
+                    z.PredstavnikZivi = c;
+
+                    p.ID = lokacija.ID;
+                    p.Tip_lokacije = lokacijaValue;
+                    p.Blago = lokacija.Blago;
+                    p.Zemlja = lokacija.Zemlja;
+                    p.Naziv_lokacije = lokacija.Naziv_lokacije;
+                    p.Borio_se = c;
+                    p.Zastite.Add(m);
+                    p.ZivePredstavnici.Add(z);
+
+                    s.Save(p);
+                    s.Flush();
+                    s.Close();
+
                 }
 
-                s.Close();
-
             }
-            catch (Exception ec)
+            catch (Exception)
             {
                 //handle exceptions
-            }
-
-            return odInfos;
-        }
-        public static OstrvoView vratiOstrvo(int Id)
-        {
-            OstrvoView lokacija = new OstrvoView();
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ostrvo lokacija1 = s.Load<Ostrvo>(Id);
-                lokacija = new OstrvoView(lokacija1);
-
-               
-                s.Flush();
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-            return lokacija;
-        }
-        public static void izmeniOstrvo(OstrvoView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-               Ostrvo o = s.Load<Ostrvo>(lokacija.ID);
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(o.Borio_se);
-                o.Borio_se = p;
-
-
-
-                s.SaveOrUpdate(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
+                throw;
             }
         }
+        #endregion Lokacija
 
-
-        public static void dodajOstrvo(OstrvoView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ostrvo o = new Ostrvo();
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(o.Borio_se);
-                o.Borio_se = p;
-
-
-                s.Save(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-        #endregion Ostrvo
-
-        #region Piramida
-        public static void obrisiPiramidu(int id)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Piramida lokacija = s.Load<Piramida>(id);
-
-                s.Delete(lokacija);
-                s.Flush();
-
-
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-
-        }
-
-       
-        public static PiramidaView vratiPiramidu(int Id)
-        {
-            PiramidaView lokacija = new PiramidaView();
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Piramida lokacija1 = s.Load<Piramida>(Id);
-                lokacija = new PiramidaView(lokacija1);
-
-
-                s.Flush();
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-            return lokacija;
-        }
-        public static void izmeniPiramidu(PiramidaView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Piramida o = s.Load<Piramida>(lokacija.ID);
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-
-
-                s.SaveOrUpdate(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-
-
-        public static void dodajPiramidu(OstrvoView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ostrvo o = new Ostrvo();
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-
-                s.Save(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-
-        #endregion Piramida
-
-        #region GradDuhova
-
-        public static void obrisiGradDuhova(int id)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Grad_duhova lokacija = s.Load<Grad_duhova>(id);
-
-                s.Delete(lokacija);
-                s.Flush();
-
-
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-
-        }
-        public static GradDuhovaView vratiGradDuhova(int id)
-        {
-            GradDuhovaView lokacija = new GradDuhovaView();
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Grad_duhova lokacija1 = s.Load<Grad_duhova>(id);
-                lokacija = new GradDuhovaView(lokacija1);
-
-
-                s.Flush();
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-            return lokacija;
-
-        }
-
-
-        public static void izmeniGradDuhova(GradDuhovaView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Grad_duhova o = s.Load<Grad_duhova>(lokacija.ID);
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(o.Borio_se);
-                o.Borio_se = p;
-
-
-
-
-                s.SaveOrUpdate(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-
-
-        public static void sacuvajGradDuhova(GradDuhovaView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Grad_duhova o = new Grad_duhova();
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-
-                s.Save(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-        #endregion GradDuhova
-
-        #region UkletiZamak
-
-        public static void obrisiUkletiZamak(int id)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ukleti_zamak lokacija = s.Load<Ukleti_zamak>(id);
-
-                s.Delete(lokacija);
-                s.Flush();
-
-
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-
-        }
-        public static UkletiZamakView vratiUkletiZamak(int id)
-        {
-            UkletiZamakView lokacija = new UkletiZamakView();
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ukleti_zamak lokacija1 = s.Load<Ukleti_zamak>(id);
-                lokacija = new UkletiZamakView(lokacija1);
-
-
-                s.Flush();
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-            return lokacija;
-
-        }
-
-
-        public static void izmeniUkletiZamak(UkletiZamakView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Ukleti_zamak o = s.Load<Ukleti_zamak>(lokacija.ID);
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-
-                s.SaveOrUpdate(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-
-
-        public static void sacuvajUkletiZamak(UkletiZamakView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-               Ukleti_zamak o = new Ukleti_zamak();
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-                s.Save(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-        #endregion UkletiZamak
-        #region Pecina
-
-        public static void obrisiPecinu(int id)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Pecina lokacija = s.Load<Pecina>(id);
-
-                s.Delete(lokacija);
-                s.Flush();
-
-
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-
-        }
-        public static PecinaView vratiPecina(int id)
-        {
-            PecinaView lokacija = new PecinaView();
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Pecina lokacija1 = s.Load<Pecina>(id);
-                lokacija = new PecinaView(lokacija1);
-
-
-                s.Flush();
-
-                s.Close();
-
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-
-            return lokacija;
-
-        }
-
-       
-        public static void izmeniPecina(PecinaView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Pecina o = s.Load<Pecina>(lokacija.ID);
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-
-
-                s.SaveOrUpdate(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-
-
-        public static void sacuvajPecina(PecinaView lokacija)
-        {
-            try
-            {
-                ISession s = DataLayer.GetSession();
-
-                Pecina o = new Pecina();
-
-                o.ID = lokacija.ID;
-                o.Naziv_lokacije = lokacija.Naziv_lokacije;
-                o.Tip_lokacije = lokacija.Tip_lokacije;
-                o.Zemlja = lokacija.Zemlja;
-                o.Blago = lokacija.Blago;
-                Predstavnik p = s.Load<Predstavnik>(lokacija.Borio_se);
-                o.Borio_se = p;
-
-                s.Save(o);
-
-                s.Flush();
-
-                s.Close();
-            }
-            catch (Exception ec)
-            {
-                //handle exceptions
-            }
-        }
-        #endregion Pecina
         #region Predstavnik
-        //----!!neki eror baca kad se buil vidi sta je------
-      /*  public static List<PredmetView> vratiSvePredstavnike()
+
+        public static List<PredstavnikView> vratiSvePredstavnike()
         {
-            List<PredmetView> predstavnici = new List<PredmetView>();
+            List<PredstavnikView> predstavnici = new List<PredstavnikView>();
             try
             {
                 ISession s = DataLayer.GetSession();
@@ -955,7 +509,7 @@ namespace CudovistaLib
 
                 foreach (Predstavnik p in sviPredstavnici)
                 {
-                    predstavnici.Add(new PredmetView(p));
+                    predstavnici.Add(new PredstavnikView(p));
                 }
 
                 s.Close();
@@ -966,9 +520,9 @@ namespace CudovistaLib
             }
 
             return predstavnici;
-        }*/
+        }
 
-        public static void dodajPredstavnika(PredstavnikView o)
+        public static void dodajPredstavnika(PredstavnikView o, int idCudovista, int idLokacije)
         {
             try
             {
@@ -981,9 +535,12 @@ namespace CudovistaLib
                 p.Starost = o.Starost;
                 p.Datum_susreta = o.DatumSusreta;
                 p.Ishod = o.Ishod;
-                p.Id_cudovista = s.Load<Cudoviste>(o.Id_cudovista);
-                p.Id_lokacije = s.Load<Lokacija>(o.Id_lokacije);
-                s.SaveOrUpdate(o);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
+                p.Id_cudovista = cudoviste;
+
+                Lokacija lokacija = s.Load<Lokacija>(idLokacije);
+                p.Id_lokacije = lokacija;
+                s.SaveOrUpdate(p);
 
                 s.Flush();
 
@@ -1007,10 +564,9 @@ namespace CudovistaLib
                 p.Starost = o.Starost;
                 p.Datum_susreta = o.DatumSusreta;
                 p.Ishod = o.Ishod;
-                p.Id_cudovista = s.Load<Cudoviste>(o.Id_cudovista);
-                p.Id_lokacije = s.Load<Lokacija>(o.Id_lokacije);
 
-                s.Update(o);
+
+                s.Update(p);
                 s.Flush();
 
                 s.Close();
@@ -1062,5 +618,6 @@ namespace CudovistaLib
             }
         }
         #endregion Predstavnik
+
     }
 }
