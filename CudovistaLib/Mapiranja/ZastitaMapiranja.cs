@@ -9,37 +9,15 @@ namespace CudovistaLib.Mapiranja
         {
             Table("ZASTITA");
 
-            DiscriminateSubClassesOnColumn("Tip_Zastite");
 
             Id(x => x.ID, "ID").GeneratedBy.TriggerIdentity();
 
             Map(x => x.Naziv_zastite).Column("NAZIV_ZASTITE");
+            Map(x => x.Tip_zastite).Column("Tip_Zastite");
             References(x => x.Id_lokacije).Column("ID_LOKACIJE").LazyLoad();
         }
     }
-    class DuhMapiranja : SubclassMap<Duh>
-    {
-        public DuhMapiranja()
-        {
-            DiscriminatorValue("Duh");
-        }
-    }
-
-    class ZmajMapiranja : SubclassMap<Zmaj>
-    {
-        public ZmajMapiranja()
-        {
-            DiscriminatorValue("Duh");
-        }
-    }
-
-    class KletvaMapiranja : SubclassMap<Kletva>
-    {
-        public KletvaMapiranja()
-        {
-            DiscriminatorValue("Duh");
-        }
-    }
+  
 
 
 }

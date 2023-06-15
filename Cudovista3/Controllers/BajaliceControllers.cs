@@ -52,6 +52,22 @@ namespace Cudovista3.Controllers
                 return BadRequest("greska pri brisanju bajalice.");
             }
         }
+        [HttpPut]
+        [Route("PromeniTekstBajalice")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult ChangeMagijskoCudoviste([FromBody] BajaliceView m)
+        {
+            try
+            {
+                DataProvajderS.AzurirajBajalice(m);
+                return Ok("Uspesno ste azurirali bajalicu  " + m.Bajalica);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
 
     }
 }

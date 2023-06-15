@@ -221,6 +221,26 @@ namespace CudovistaLib
                 throw;
             }
         }
+        public static BajaliceView AzurirajBajalice(BajaliceView b)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Bajalice o = s.Load<Bajalice>(b.ID);
+                o.Bajalica=b.Bajalica;
+                s.Update(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+
+            return b;
+        }
         #endregion
         #region Nemagijska
 

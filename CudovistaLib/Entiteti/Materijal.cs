@@ -15,27 +15,5 @@ namespace CudovistaLib.Entiteti
         public virtual Predmet Pripada_predmetu { get; set; }
     }
 
-  /*  public class Zlato : Materijal
-    {
-
-    }
-
-    public class Srebro : Materijal
-    {
-
-    }
-
-    public class Papir : Materijal
-    {
-
-    }
-    public class Dijamant : Materijal
-    {
-
-    }
-
-    public class Metal : Materijal
-    {
-
-    }*/
+  
 }

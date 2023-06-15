@@ -16,22 +16,5 @@ namespace CudovistaLib.Entiteti
 
     }
 
-   /* public class Lobanja : Predmet
-    {
-
-    }
-
-    public class Krst : Predmet
-    {
-
-    }
-    public class Mac : Predmet
-    {
-
-    }
-
-    public class Knjiga : Predmet
-    {
-
-    }*/
+  
 }

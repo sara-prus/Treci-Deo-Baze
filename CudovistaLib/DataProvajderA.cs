@@ -755,6 +755,99 @@ namespace CudovistaLib
         }
 
         #endregion Lovac
+        #region Zastita
+        public static void SacuvajZastituLokacija(int idZastite, int idLokacija)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Zastita o = s.Load<Zastita>(idZastite);
+                Lokacija p = s.Load<Lokacija>(idLokacija);
+
+                o.Id_lokacije = p;
+
+                s.Save(o);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+
+
+
+
+
+        //--provera za materijal pomocan metoda
+        public static string GetZastitaValue(string lokacija)
+        {
+            string[] validZastita = { "Duh", "Zmaj", "Kletva" };
+
+            for (int i = 0; i < validZastita.Length; i++)
+            {
+                if (string.Equals(validZastita[i], lokacija, StringComparison.OrdinalIgnoreCase))
+                    return validZastita[i];
+            }
+
+            return ""; // Return "" if the material is invalid
+        }
+
+
+        public static void DodajZastitu(ZastitaView zastita, int idLokacija, string zastitaStr)
+        {
+            try
+            {
+                string zastitaValue = GetZastitaValue(zastitaStr);
+                if (zastitaValue != "")
+                {
+
+                    ISession s = DataLayer.GetSession();
+
+                    Zastita p = new Zastita();
+                    Lokacija c = s.Load<Lokacija>(idLokacija);
+
+                    p.ID = zastita.ID;
+                    p.Naziv_zastite = zastita.Naziv_zastite;
+                    p.Tip_zastite = zastitaValue;
+                    p.Id_lokacije = c;
+
+                    s.Save(p);
+                    s.Flush();
+                    s.Close();
+
+                }
+
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+
+        public static void obrisiZastitu(int id)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Zastita p = s.Load<Zastita>(id);
+                s.Delete(p);
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+        }
+
+        #endregion Zastita
 
     }
 }

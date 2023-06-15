@@ -12,8 +12,8 @@ namespace CudovistaLib.DTOs
         public virtual int ID { get; set; }
         public virtual string Naziv_zastite { get; set; }
 
-        public virtual string Tip_zastite { get; set; }
-        public virtual LokacijaView Id_lokacije { get; set; }
+        public virtual string? Tip_zastite { get; set; }
+        public virtual LokacijaView? Id_lokacije { get; set; }
 
 
         public ZastitaView()

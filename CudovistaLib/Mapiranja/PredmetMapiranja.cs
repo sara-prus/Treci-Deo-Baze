@@ -21,32 +21,5 @@ namespace CudovistaLib.Mapiranja
 
         }
     }
-/*    class LobanjaMapiranja : SubclassMap<Lobanja>
-    {
-        public LobanjaMapiranja()
-        {
-            DiscriminatorValue("Lobanja");
-        }
-    }
-    class KrstMapiranja : SubclassMap<Krst>
-    {
-        public KrstMapiranja()
-        {
-            DiscriminatorValue("Krst");
-        }
-    }
-    class MacMapiranja : SubclassMap<Mac>
-    {
-        public MacMapiranja()
-        {
-            DiscriminatorValue("Mac");
-        }
-    }
-    class KnjigaMapiranja : SubclassMap<Knjiga>
-    {
-        public KnjigaMapiranja()
-        {
-            DiscriminatorValue("Knjiga");
-        }
-    }*/
+
 }

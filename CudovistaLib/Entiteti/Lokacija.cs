@@ -15,35 +15,9 @@ namespace CudovistaLib.Entiteti
         public virtual string Blago { get; set; }
         public virtual Predstavnik Borio_se { get; set; }
         public virtual IList<Zastita> Zastite { get; set; }
-        public virtual IList<Zivi_na> ZivePredstavnici { get; set; } //ne diraj dovrsicu jos ovo m
+        public virtual IList<Zivi_na> ZivePredstavnici { get; set; } 
       
-        /*
-        public class Grobnica : Lokacija
-        {
-
-        }
-        public class Ostrvo : Lokacija
-        {
-
-        }
-        public class Piramida : Lokacija
-        {
-
-        }
-        public class Grad_duhova : Lokacija
-        {
-
-        }
-        public class Ukleti_zamak : Lokacija
-        {
-
-        }
-        public class Pecina : Lokacija
-        {
-
-        }
-
-        */
+       
 
         public Lokacija()
         {
