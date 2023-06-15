@@ -103,14 +103,14 @@ namespace Cudovista3.Controllers
 
 
         [HttpPost]
-        [Route("DodajLegendu/{idCudovista}")]
+        [Route("DodajOstrvo/{idPredstavnika}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddLegendu([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] LegendeView m)
+        public IActionResult AddLegendu([FromRoute(Name = "idPredstavnika")] int idPredstavnika, [FromBody] OstrvoView m)
         {
             try
             {
-                var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
+                var cudoviste = DataProvajderS.VratiCudoviste(idPredstavnika);
                 m.Id_cudovista = cudoviste;
 
                 DataProvajderA.dodajLegendu(m);
@@ -122,42 +122,6 @@ namespace Cudovista3.Controllers
             }
         }
 
-        [HttpPut]
-        [Route("PromeniLegendu/{idCudovista}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult ChangeLegendu([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] LegendeView m)
-        {
-            try
-            {
-
-                var cudoviste = DataProvajderS.VratiCudoviste(idCudovista);
-                m.Id_cudovista = cudoviste;
-
-
-                DataProvajderA.azurirajLegendu(m);
-                return Ok("Uspesno ste azurirali Legendu  " + m.Zemlja_porekla);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
-        [HttpDelete]
-        [Route("IzbrisiLegendu/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult DeleteLegendu(int id)
-        {
-            try
-            {
-                DataProvajderA.obrisiLegendu(id);
-                return Ok("Uspesno ste obrisali legendu");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
-        }
+       
     }
 }
