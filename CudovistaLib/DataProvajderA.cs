@@ -154,7 +154,7 @@ namespace CudovistaLib
             return cudovista;
         }
 
-        public static void dodajLegendu(LegendeView p)
+        public static void dodajLegendu(LegendeView p, int idCudovista)
         {
             try
             {
@@ -166,7 +166,7 @@ namespace CudovistaLib
                 o.Tekst = p.Tekst;
                 o.Prvo_pominjanje = p.Prvo_pominjanje;
                 o.Zemlja_porekla = p.Zemlja_porekla;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
                 s.SaveOrUpdate(o);
 
@@ -273,7 +273,7 @@ namespace CudovistaLib
             return specijalneSposobnosti;
         }
 
-        public static void dodajSpecijalnuSposobnost(Specijalne_sposobnostiView p)
+        public static void dodajSpecijalnuSposobnost(Specijalne_sposobnostiView p, int idCudovista)
         {
             try
             {
@@ -283,7 +283,7 @@ namespace CudovistaLib
 
                 o.ID = p.ID;
                 o.Spec_sposobnosti = p.Spec_sposobnosti;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
 
 
@@ -299,7 +299,7 @@ namespace CudovistaLib
             }
         }
 
-        public static Specijalne_sposobnostiView azurirajSpecijalnuSposobnost(Specijalne_sposobnostiView p)
+        public static Specijalne_sposobnostiView azurirajSpecijalnuSposobnost(Specijalne_sposobnostiView p, int idCudovista)
         {
             try
             {
@@ -309,7 +309,7 @@ namespace CudovistaLib
 
                 o.ID = p.ID;
                 o.Spec_sposobnosti = p.Spec_sposobnosti;
-                Cudoviste cudoviste = s.Load<Cudoviste>(p.Id_cudovista);
+                Cudoviste cudoviste = s.Load<Cudoviste>(idCudovista);
                 o.Id_cudovista = cudoviste;
 
                 s.Update(o);
@@ -453,7 +453,7 @@ namespace CudovistaLib
         }
 
 
-        public static void DodajLokaciju(LokacijaView lokacija, int idPredstavnika, int idZastite, string lokacijaStr)
+        public static void DodajLokaciju(LokacijaView lokacija, int idPredBorba, int idZastite, int idPredstavnika, string lokacijaStr)
         {
             try
             {
@@ -464,12 +464,13 @@ namespace CudovistaLib
                     ISession s = DataLayer.GetSession();
 
                     Lokacija p = new Lokacija();
-                    Predstavnik c = s.Load<Predstavnik>(idPredstavnika);
+                    Predstavnik c = s.Load<Predstavnik>(idPredBorba);
                     Zastita m = s.Load<Zastita>(idZastite);
+                    Predstavnik x = s.Load<Predstavnik>(idPredstavnika);
 
                     Zivi_na z = new Zivi_na();
                     z.LokacijaZivota = p;
-                    z.PredstavnikZivi = c;
+                    z.PredstavnikZivi = x;
 
                     p.ID = lokacija.ID;
                     p.Tip_lokacije = lokacijaValue;
@@ -491,6 +492,24 @@ namespace CudovistaLib
             {
                 //handle exceptions
                 throw;
+            }
+        }
+
+        public static void obrisilokaciju(int id)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Lokacija p = s.Load<Lokacija>(id);
+                s.Delete(p);
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
             }
         }
         #endregion Lokacija
@@ -618,6 +637,126 @@ namespace CudovistaLib
             }
         }
         #endregion Predstavnik
+
+        #region Lovac
+
+        public static List<LovacView> vratiSveLovce()
+        {
+            List<LovacView> lovci = new List<LovacView>();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                IEnumerable<Lovac> sviLovci = from o in s.Query<Lovac>()
+                                                                               select o;
+
+                foreach (Lovac p in sviLovci)
+                {
+                    lovci.Add(new LovacView(p));
+                }
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+
+            return lovci;
+        }
+
+        public static void dodajLovca(LovacView p, int idPredstavnika)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Lovac o = new Lovac();
+
+                o.ID = p.ID;
+                o.Ime_lovca = p.Ime_lovca;
+                Predstavnik predstavnik = s.Load<Predstavnik>(idPredstavnika);
+                o.Id_predstavnika = predstavnik;
+
+
+                s.SaveOrUpdate(o);
+
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+        }
+
+        public static LovacView azurirajLovca(LovacView p, int idPredstavnika)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Lovac o = new Lovac();
+
+                o.ID = p.ID;
+                o.Ime_lovca = p.Ime_lovca;
+                Predstavnik predstavnik = s.Load<Predstavnik>(idPredstavnika);
+                o.Id_predstavnika = predstavnik;
+
+
+                s.Update(o);
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+
+            return p;
+        }
+
+        public static LovacView vratiLovca(int id)
+        {
+            LovacView pb = new LovacView();
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Lovac p = s.Load<Lovac>(id);
+                pb = new LovacView(p);
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+
+            return pb;
+        }
+
+        public static void obrisiLovca(int id)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Lovac p = s.Load<Lovac>(id);
+                s.Delete(p);
+                s.Flush();
+
+                s.Close();
+            }
+            catch (Exception ec)
+            {
+                //handle exceptions
+            }
+        }
+
+        #endregion Lovac
 
     }
 }
