@@ -11,17 +11,17 @@ namespace Cudovista3.Controllers
     public class Zivi_naControllers : ControllerBase
     {
         [HttpPost]
-        [Route("DodajZiviNa/{prestavnikID}/{lokacijaID}")]
+        [Route("DodajPredstavnikaNaLokaciju/{prestavnikID}/{lokacijaID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddBajalica([FromRoute(Name = "prestavnikID")] int prestavnikID, [FromRoute(Name = "lokacijaID")] int lokacijaID)
+        public IActionResult AddZiviNa([FromRoute(Name = "prestavnikID")] int prestavnikID, [FromRoute(Name = "lokacijaID")] int lokacijaID)
         {
             try
             {
                 // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
                 DataProvajderS.SacuvajZiviNa( prestavnikID, lokacijaID);
 
-                return Ok();
+                return Ok("Uspesno ste dodali lokaciju zivota predstavniku");
             }
             catch (Exception ex)
             {

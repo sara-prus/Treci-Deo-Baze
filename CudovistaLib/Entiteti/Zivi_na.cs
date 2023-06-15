@@ -11,8 +11,8 @@ namespace CudovistaLib.Entiteti
         public virtual int ID { get; set; }
       /*  public virtual int Id_lokacije { get; set; }
         public virtual int Id_predstavnika { get; set; } */
-        public virtual Predstavnik PredstavnikZivi { get; set; }
-        public virtual Lokacija LokacijaZivota { get; set; }
+        public virtual Predstavnik? PredstavnikZivi { get; set; }
+        public virtual Lokacija? LokacijaZivota { get; set; }
 
 
     }

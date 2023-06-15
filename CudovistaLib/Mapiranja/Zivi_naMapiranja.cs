@@ -11,8 +11,8 @@ namespace CudovistaLib.Mapiranja
 
             Id(x => x.ID, "ID").GeneratedBy.TriggerIdentity();
 
-            References(x => x.PredstavnikZivi).Column("Id_lokacije");
-            References(x => x.LokacijaZivota).Column("Id_predstavnika");
+            References(x => x.PredstavnikZivi).Column("Id_predstavnika"); 
+            References(x => x.LokacijaZivota).Column("Id_lokacije");
 
         }
     }
