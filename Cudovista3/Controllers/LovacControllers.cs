@@ -1,25 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using CudovistaLib.DTOs;
 using CudovistaLib;
-using CudovistaLib.DTOs;
-using System;
+using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace Cudovista3.Controllers
 {
-    public class SpecijalneSposobnostiControllers
+    [Route("[controller]")]
+    [ApiController]
+    public class LovacControllers : ControllerBase
     {
-        [Route("[controller]")]
-        [ApiController]
-        public class ProtivmereControllers : ControllerBase
-        {
+
+        
             [HttpGet]
-            [Route("PreuzmiSpecijalneSposobnosti")]
+            [Route("PreuzmiLovce")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetSveSpecijalneSposobnosti()
+            public IActionResult GetSveLovce()
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiSveSpecijalneSposobnosti());
+                    return new JsonResult(DataProvajderA.vratiSveLovce());
                 }
                 catch (Exception ex)
                 {
@@ -28,13 +27,13 @@ namespace Cudovista3.Controllers
             }
 
             [HttpGet]
-            [Route("PreuzmiSpecijalnuSposobnost")]
+            [Route("PreuzmiLovca")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetSpecijalneSposobnost(int id)
+            public IActionResult GetLovca(int id)
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiSpecijalnuSposobnost(id));
+                    return new JsonResult(DataProvajderA.vratiLovca(id));
                 }
                 catch (Exception ex)
                 {
@@ -43,16 +42,16 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPost]
-            [Route("DodajSpecijalnuSposobnost/{idCudovista}")]
+            [Route("DodajLovca/{idPredstavnika}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult AddProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] Specijalne_sposobnostiView m)
+            public IActionResult AddLovca([FromRoute(Name = "idPredstavnika")] int idPredstavnika, [FromBody] LovacView m)
             {
                 try
                 {
 
-                    DataProvajderA.dodajSpecijalnuSposobnost(m, idCudovista);
-                    return Ok("Uspesno ste dodali Specijalnu Sposobnost " + m.Spec_sposobnosti);
+                    DataProvajderA.dodajLovca(m, idPredstavnika);
+                    return Ok("Uspesno ste dodali lovca");
                 }
                 catch (Exception ex)
                 {
@@ -61,15 +60,15 @@ namespace Cudovista3.Controllers
             }
 
             [HttpPut]
-            [Route("PromeniSpecijalnuSposobnost/{idCudovista}")]
+            [Route("PromeniLovca/{idPredstavnika}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult ChangeProtivmeru([FromRoute(Name = "idCudovista")] int idCudovista, [FromBody] Specijalne_sposobnostiView m)
+            public IActionResult ChangeLovca([FromRoute(Name = "idPredstavnika")] int idPredstavnika, [FromBody] LovacView m)
             {
                 try
                 {
-                    DataProvajderA.azurirajSpecijalnuSposobnost(m, idCudovista);
-                    return Ok("Uspesno ste azurirali protivmeru  " + m.Spec_sposobnosti);
+                    DataProvajderA.azurirajLovca(m, idPredstavnika);
+                    return Ok("Uspesno ste azurirali lovca");
                 }
                 catch (Exception ex)
                 {
@@ -77,15 +76,15 @@ namespace Cudovista3.Controllers
                 }
             }
             [HttpDelete]
-            [Route("IzbrisiSpecijalnuSposobnost/{id}")]
+            [Route("IzbrisiLovca/{id}")]
             [ProducesResponseType(StatusCodes.Status200OK)]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult DeleteProtivmeru(int id)
+            public IActionResult DeleteLovca(int id)
             {
                 try
                 {
-                    DataProvajderA.obrisiSpecijalnuSposobnosti(id);
-                    return Ok("Uspesno ste obrisali Specijalnu Sposobnost");
+                    DataProvajderA.obrisiLovca(id);
+                    return Ok("Uspesno ste obrisali lovca");
                 }
                 catch (Exception ex)
                 {
@@ -93,6 +92,6 @@ namespace Cudovista3.Controllers
                 }
             }
 
-        }
+        
     }
 }

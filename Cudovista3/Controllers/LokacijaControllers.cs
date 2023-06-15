@@ -8,7 +8,7 @@ namespace Cudovista3.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class LokacijaController : ControllerBase
+    public class LokacijaControllers : ControllerBase
     {
         [HttpPut]
         [Route("DodajZastituLokaciji/{idLokacije}/{idZastite}")]
@@ -63,6 +63,43 @@ namespace Cudovista3.Controllers
                 DataProvajderA.SacuvajLokacijuPredstavnikZivi(idLokacije, idPredstavnika);
 
                 return Ok("uspesno ste dodali materijal premetu");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPost]
+        [Route("DodajLokaciju/{idPredstavnika}/{IdZastite}/{idPredBorba}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult AddLokaciju([FromRoute(Name = "cudovisteID")] int idPredstavnika, [FromRoute(Name = "IdZastite")] int IdZastite, [FromRoute(Name = "idPredBorba")] int idPredBorba, string lokacija, [FromBody] LokacijaView p)
+        {
+            try
+            {
+                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
+
+                DataProvajderA.DodajLokaciju(p, idPredBorba, IdZastite, idPredstavnika, lokacija);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpDelete]
+        [Route("IzbrisiLokaciju/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeleteLokaciju(int id)
+        {
+            try
+            {
+                DataProvajderA.obrisilokaciju(id);
+                return Ok("Uspesno ste obrisali lokaciju");
             }
             catch (Exception ex)
             {
