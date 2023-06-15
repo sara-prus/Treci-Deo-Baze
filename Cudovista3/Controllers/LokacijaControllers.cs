@@ -22,7 +22,7 @@ namespace Cudovista3.Controllers
 
                 DataProvajderA.SacuvajLokacijuZastita(idLokacije, idZastite);
 
-                return Ok("uspesno ste dodali materijal premetu");
+                return Ok("uspesno ste dodali zastitu lokaciji");
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace Cudovista3.Controllers
 
                 DataProvajderA.SacuvajLokacijuBorba(idLokacije, idPredstavnika);
 
-                return Ok("uspesno ste dodali materijal premetu");
+                return Ok("uspesno ste dodali borbu lokaciji");
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace Cudovista3.Controllers
 
                 DataProvajderA.SacuvajLokacijuPredstavnikZivi(idLokacije, idPredstavnika);
 
-                return Ok("uspesno ste dodali materijal premetu");
+                return Ok("uspesno ste dodali predstavnika lokaciji");
             }
             catch (Exception ex)
             {

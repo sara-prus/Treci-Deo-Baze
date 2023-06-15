@@ -13,7 +13,7 @@ namespace CudovistaLib.DTOs
         public virtual string Naziv_protivmere { get; set; }
         public virtual string Opis_protivmere { get; set; }
         public virtual int Da_li_uslovi { get; set; }
-        public virtual  CudovisteView Id_cudovista { get; set; }
+        public virtual  CudovisteView? Id_cudovista { get; set; }
 
         public ProtivmereView()
         {
