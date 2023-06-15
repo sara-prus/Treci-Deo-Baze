@@ -31,11 +31,11 @@ namespace Cudovista3.Controllers
             [HttpGet]
             [Route("PreuzmiPredstavnika")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
-            public IActionResult GetPredstavnika(int id)
+            public IActionResult GetPredstavnika(int idPredstavnika)
             {
                 try
                 {
-                    return new JsonResult(DataProvajderA.vratiPredstavnika(id));
+                    return new JsonResult(DataProvajderA.VratiPredstavnika(idPredstavnika));
                 }
                 catch (Exception ex)
                 {

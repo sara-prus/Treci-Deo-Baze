@@ -17,7 +17,7 @@ namespace CudovistaLib.Entiteti
         public virtual Lokacija? Id_lokacije { get; set; }
 
         public virtual IList<Lovac> Love_ga { get; set; }
-        public virtual IList<Zivi_na> ZiveNaLokacijama { get; set; }  //ne diraj dovrsicu jos ovo m
+        public virtual IList<Zivi_na> ZiveNaLokacijama { get; set; } 
 
         public Predstavnik()
         {

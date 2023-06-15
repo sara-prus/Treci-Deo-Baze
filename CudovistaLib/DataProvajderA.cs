@@ -598,24 +598,22 @@ namespace CudovistaLib
             return o;
         }
 
-        public static PredstavnikView vratiPredstavnika(int id)
+        public static PredstavnikView VratiPredstavnika(int idCudovista)
         {
-            PredstavnikView pb = new PredstavnikView();
+            PredstavnikView cudoviste;
             try
             {
                 ISession s = DataLayer.GetSession();
-
-                Predstavnik p = s.Load<Predstavnik>(id);
-                pb = new PredstavnikView(p);
+                Predstavnik o = s.Load<Predstavnik>(idCudovista);
+                cudoviste = new PredstavnikView(o);
 
                 s.Close();
             }
-            catch (Exception ec)
+            catch (Exception)
             {
-                //handle exceptions
+                throw;
             }
-
-            return pb;
+            return cudoviste;
         }
 
         public static void obrisiPredstavnika(int id)

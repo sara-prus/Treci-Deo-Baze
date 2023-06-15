@@ -17,21 +17,24 @@ namespace CudovistaLib.DTOs
         public virtual CudovisteView? Id_cudovista { get; set; }
         public virtual LokacijaView? Id_lokacije { get; set; }
 
-
+        public virtual IList<Lovac>? Love_ga { get; set; }
+        public virtual IList<Zivi_na>? ZiveNaLokacijama { get; set; }
 
         public PredstavnikView()
         {
+            Love_ga=new List<Lovac>();
+            ZiveNaLokacijama = new List<Zivi_na>();
 
         }
         public PredstavnikView(Predstavnik p)
         {
-            this.ID = p.ID;
-            this.Ime_predstavnika = p.Ime_predstavnika;
-            this.Starost = p.Starost;
-            this.DatumSusreta = p.Datum_susreta;
-            this.Ishod = p.Ishod;
-            this.Id_cudovista =  new CudovisteView(p.Id_cudovista);
-            this.Id_lokacije = new LokacijaView(p.Id_lokacije);
+            ID = p.ID;
+            Ime_predstavnika = p.Ime_predstavnika;
+            Starost = p.Starost;
+            DatumSusreta = p.Datum_susreta;
+            Ishod = p.Ishod;
+            Id_cudovista =  new CudovisteView(p.Id_cudovista);
+            // Id_lokacije = new LokacijaView(p.Id_lokacije);
 
         }
     }

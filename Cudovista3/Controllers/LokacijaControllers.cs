@@ -74,7 +74,7 @@ namespace Cudovista3.Controllers
         [Route("DodajLokaciju/{idPredstavnika}/{IdZastite}/{idPredBorba}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddLokaciju([FromRoute(Name = "cudovisteID")] int idPredstavnika, [FromRoute(Name = "IdZastite")] int IdZastite, [FromRoute(Name = "idPredBorba")] int idPredBorba, string lokacija, [FromBody] LokacijaView p)
+        public IActionResult AddLokaciju([FromRoute(Name = "idPredstavnika")] int idPredstavnika, [FromRoute(Name = "IdZastite")] int IdZastite, [FromRoute(Name = "idPredBorba")] int idPredBorba, string lokacija, [FromBody] LokacijaView p)
         {
             try
             {
