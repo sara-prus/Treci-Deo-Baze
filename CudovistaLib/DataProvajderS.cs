@@ -486,7 +486,7 @@ namespace CudovistaLib
                     return i + 1;
             }
 
-            return -1; // Return -1 if the material is invalid
+            return -1; 
         }
 
 
@@ -554,6 +554,35 @@ namespace CudovistaLib
         }
 
 
+        #endregion
+
+        #region Zivi na
+
+        public static void SacuvajZiviNa( int idPredstavnika, int idLokacije)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                Zivi_na z= new Zivi_na();
+                Predstavnik p = s.Load<Predstavnik>(idPredstavnika);
+                Lokacija l = s.Load<Lokacija>(idLokacije);
+
+                
+                z.LokacijaZivota = l;
+                z.PredstavnikZivi = p;
+
+
+                s.Save(z);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+
+        }
         #endregion
     }
 }

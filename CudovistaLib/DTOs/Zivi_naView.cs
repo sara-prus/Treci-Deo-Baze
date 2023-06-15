@@ -10,10 +10,11 @@ namespace CudovistaLib.DTOs
     public  class Zivi_naView
     {
         public virtual int ID { get; set; }
-        //public int Id_lokacije;
-        //public int Id_predstavnika;
-        public virtual PredstavnikView predstavnikZivi { get; set; }
-        public virtual LokacijaView lokacijaZivota { get; set; }
+        /*
+        public int Id_lokacije;
+        public int Id_predstavnika;*/
+        public virtual PredstavnikView? predstavnikZivi { get; set; }
+        public virtual LokacijaView? lokacijaZivota { get; set; }
 
         public Zivi_naView()
         {

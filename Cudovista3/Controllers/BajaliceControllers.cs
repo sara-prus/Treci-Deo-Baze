@@ -22,7 +22,7 @@ namespace Cudovista3.Controllers
             try
             {
                 // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
-
+                DataProvajderS.SacuvajBajalicu(o, cudovisteID);
 
                 return Ok();
             }
@@ -35,7 +35,7 @@ namespace Cudovista3.Controllers
         [Route("IzbrisiBajalicu/{bajalicaID}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult DeleteBajalica(int bajalicaID)
+        public IActionResult DeletePredmet(int bajalicaID)
         {
             try
             {
