@@ -2,7 +2,6 @@
 using CudovistaLib;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CudovistaLib.DTOs.TipMaterijala;
 
 namespace Cudovista3.Controllers
 {

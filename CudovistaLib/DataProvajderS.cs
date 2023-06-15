@@ -1,6 +1,5 @@
 ﻿using CudovistaLib;
 using CudovistaLib.DTOs;
-using CudovistaLib.DTOs.TipMaterijala;
 using CudovistaLib.Entiteti;
 using NHibernate;
 using System;
@@ -20,7 +19,7 @@ namespace CudovistaLib
         #region Cudoviste
         public static CudovisteView VratiCudoviste(int idCudovista)
     {
-        CudovisteView cudoviste;
+            CudovisteView cudoviste;
         try
         {
             ISession s = DataLayer.GetSession();
