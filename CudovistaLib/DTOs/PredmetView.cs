@@ -10,8 +10,8 @@ namespace CudovistaLib.DTOs
     public class PredmetView
     {
         public virtual int ID { get; set; }
-        public virtual CudovisteView Id_cudovista { get; set; }
-        public  virtual MaterijalView ID_Materijala { get; set; }
+        public virtual CudovisteView? Id_cudovista { get; set; }
+        public  virtual MaterijalView? ID_Materijala { get; set; }
         public virtual string Tip_Predmeta { get; set; }
 
 

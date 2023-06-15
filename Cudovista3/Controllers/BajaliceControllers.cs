@@ -31,6 +31,27 @@ namespace Cudovista3.Controllers
                 return BadRequest(ex.ToString());
             }
         }
+        [HttpDelete]
+        [Route("IzbrisiBajalicu/{bajalicaID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeleteBajalica(int bajalicaID)
+        {
+            try
+            {
+                DataProvajderS.DeleteBajalicu(bajalicaID);
+
+                return Ok("Bajalica je obrisana.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("greska pri brisanju bajalice.");
+            }
+        }
 
     }
 }

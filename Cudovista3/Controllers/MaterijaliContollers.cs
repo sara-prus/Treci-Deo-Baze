@@ -48,26 +48,51 @@ namespace Cudovista3.Controllers
                 return BadRequest(ex.ToString());
             }
         }
-        
-        //debagiracu ovu metodu da se doda predmet mada nisam sigurna da nam treba uopste al ok
+
         [HttpPost]
-        [Route("DodajPredmet/{cudovisteID}/{materijal}/")]
+        [Route("DodajPredmet/{cudovisteID}/{materijal}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult AddPredmet([FromRoute(Name = "cudovisteID")] int cudovisteID, [FromRoute(Name = "materijal")] string materijal, [FromBody] PredmetView p)
+        public IActionResult AddPredmet(int cudovisteID, string materijal, [FromBody] PredmetView p)
         {
             try
             {
-                // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
-
                 DataProvajderS.DodajPredmet(p, cudovisteID, materijal);
 
-                return Ok();
+                return Ok("Uspesno ste dodali predmet " + p.Tip_Predmeta);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
-                return BadRequest(ex.ToString());
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("Doslo je do greske prilikom dodavanja predmeta.");
             }
         }
+
+        [HttpDelete]
+        [Route("IzbrisiPredmet/{predmetID}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult DeletePredmet(int predmetID)
+        {
+            try
+            {
+                DataProvajderS.DeletePredmet(predmetID);
+
+                return Ok("Predmet successfully deleted.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return BadRequest("An error occurred while deleting the predmet.");
+            }
+        }
+
+
     }
 }

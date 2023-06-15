@@ -47,8 +47,8 @@ namespace Cudovista3.Controllers
             try
             {
 
-                DataProvajderA.dodajLegendu(m/*, idCudovista*/);
-                return Ok("Uspesno ste dodali Legendu " + m.Zemlja_porekla);
+                DataProvajderA.dodajLegendu(m, idCudovista);
+                return Ok("Uspesno ste dodali Legendu " + m.Tekst);
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ namespace CudovistaLib.DTOs
         public virtual string Tekst { get; set; }
         public virtual DateTime Prvo_pominjanje { get; set; }
         public  virtual string Zemlja_porekla { get; set; }
-        public virtual CudovisteView Id_cudovista { get; set; }
+        public virtual CudovisteView? Id_cudovista { get; set; }
 
         public LegendeView()
         {

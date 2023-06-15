@@ -13,15 +13,18 @@ namespace CudovistaLib.DTOs
         public virtual int Vek { get; set; }
         public virtual string Naziv_cudovista { get; set; }
         public virtual string Podtip { get; set; }
-        /*public virtual IList<ProtivmereView> Protivmere { get; set; }
+        public virtual IList<ProtivmereView> Protivmere { get; set; }
         
         public virtual IList<PredstavnikView> Predstavnici { get; set; }
-        public virtual IList<LegendeView> Legende { get; set; }*/
+        public virtual IList<LegendeView> Legende { get; set; }
         public virtual IList<PredmetView> Predmeti { get; set; }
         public virtual IList<BajaliceView> Bajalice { get; set; }
 
         public CudovisteView()
         {
+            Protivmere=new List<ProtivmereView>();
+            Legende=new List<LegendeView>();
+            Predstavnici=new List<PredstavnikView>();
             Bajalice= new List<BajaliceView>();
             Predmeti= new List<PredmetView>();
         }

@@ -9,8 +9,8 @@ namespace CudovistaLib.Entiteti
     public class Predmet
     {
         public virtual int ID { get; set; }
-        public virtual Cudoviste Id_cudovista { get; set; }
-        public virtual Materijal ID_Materijala { get; set; }
+        public virtual Cudoviste? Id_cudovista { get; set; }
+        public virtual Materijal? ID_Materijala { get; set; }
 
         public virtual string Tip_Predmeta { get; set; }
 

@@ -14,8 +14,8 @@ namespace CudovistaLib.DTOs
         public virtual int Starost { get; set; }
         public virtual DateTime DatumSusreta { get; set; }
         public virtual string Ishod { get; set; }
-        public virtual CudovisteView Id_cudovista { get; set; }
-        public virtual LokacijaView Id_lokacije { get; set; }
+        public virtual CudovisteView? Id_cudovista { get; set; }
+        public virtual LokacijaView? Id_lokacije { get; set; }
 
 
 

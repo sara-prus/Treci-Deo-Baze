@@ -196,6 +196,31 @@ namespace CudovistaLib
                 throw;
             }
         }
+
+        public static void DeleteBajalicu(int bajalicaID)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                var predmet = s.Get<Bajalice>(bajalicaID);
+
+                if (predmet != null)
+                {
+                    s.Delete(predmet);
+                    s.Flush();
+                    s.Close();
+                }
+                else
+                {
+                    throw new ArgumentException("Bajalica not found");
+                }
+            }
+            catch (Exception)
+            {
+                // Handle exceptions
+                throw;
+            }
+        }
         #endregion
         #region Nemagijska
 
@@ -472,6 +497,11 @@ namespace CudovistaLib
                 int idMaterijala = GetMaterialID(materijal);
                 if (idMaterijala != -1)
                 {
+                    string[] validTypes = { "krst", "lobanja", "mac", "knjiga" };
+                    if (!validTypes.Contains(predmet.Tip_Predmeta.ToLower()))
+                    {
+                        throw new ArgumentException("Ne postoji taj tip predmeta");
+                    }
 
                     ISession s = DataLayer.GetSession();
 
@@ -482,20 +512,48 @@ namespace CudovistaLib
                     p.Tip_Predmeta = predmet.Tip_Predmeta;
                     p.ID_Materijala = m;
                     p.Id_cudovista = c;
-                 
+
                     s.Save(p);
                     s.Flush();
                     s.Close();
-
                 }
-                    
+                else
+                {
+                    throw new ArgumentException("Pogresan materijal");
+                }
             }
             catch (Exception)
             {
-                //handle exceptions
+                // Handle exceptions
                 throw;
             }
         }
+        public static void DeletePredmet(int predmetID)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+                var predmet = s.Get<Predmet>(predmetID);
+
+                if (predmet != null)
+                {
+                    s.Delete(predmet);
+                    s.Flush();
+                    s.Close();
+                }
+                else
+                {
+                    throw new ArgumentException("Predmet not found");
+                }
+            }
+            catch (Exception)
+            {
+                // Handle exceptions
+                throw;
+            }
+        }
+
+
         #endregion
     }
 }
