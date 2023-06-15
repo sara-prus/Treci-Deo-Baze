@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.Entiteti
 {
-    public abstract class Materijal
+    public  class Materijal
     {
         public virtual int ID { get; set; }
 
@@ -15,7 +15,7 @@ namespace CudovistaLib.Entiteti
         public virtual Predmet Pripada_predmetu { get; set; }
     }
 
-    public class Zlato : Materijal
+  /*  public class Zlato : Materijal
     {
 
     }
@@ -37,5 +37,5 @@ namespace CudovistaLib.Entiteti
     public class Metal : Materijal
     {
 
-    }
+    }*/
 }

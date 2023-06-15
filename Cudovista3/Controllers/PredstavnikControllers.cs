@@ -15,7 +15,7 @@ namespace Cudovista3.Controllers
         [ApiController]
         public class LegendeControllers : ControllerBase
         {
-            [HttpGet]
+            /*[HttpGet]
             [Route("PreuzmiLegende")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             public IActionResult GetSvePredstavnike()
@@ -28,7 +28,7 @@ namespace Cudovista3.Controllers
                 {
                     return BadRequest(ex.ToString());
                 }
-            }
+            }*/
 
             [HttpGet]
             [Route("PreuzmiPredstavnika")]

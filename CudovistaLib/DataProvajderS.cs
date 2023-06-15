@@ -1,5 +1,6 @@
 ﻿using CudovistaLib;
 using CudovistaLib.DTOs;
+using CudovistaLib.DTOs.TipMaterijala;
 using CudovistaLib.Entiteti;
 using NHibernate;
 using System;
@@ -16,7 +17,8 @@ namespace CudovistaLib
     public class DataProvajderS
 
     {
-    public static CudovisteView VratiCudoviste(int idCudovista)
+        #region Cudoviste
+        public static CudovisteView VratiCudoviste(int idCudovista)
     {
         CudovisteView cudoviste;
         try
@@ -59,7 +61,8 @@ namespace CudovistaLib
 
             return magijska;
         }
-        #region Cudovista
+        #endregion
+        #region Magijska
         public static MagijskoView VratiMagijskoCudoviste(int idCudovista)
         {
             MagijskoView magijsko;
@@ -170,7 +173,7 @@ namespace CudovistaLib
                 throw;
             }
         }
-        #endregion
+        #endregion      
         #region Bajalice
         public static void SacuvajBajalicu(BajaliceView bajalica, int idCudovista)
         {
@@ -393,6 +396,100 @@ namespace CudovistaLib
                 s.Save(o);
                 s.Flush();
                 s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+        #endregion
+
+        #region Materijali
+        public static void SacuvajMaterijal(int idMaterijala, int idPredmeta)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Materijal o= s.Load<Materijal>(idMaterijala);
+                Predmet p = s.Load<Predmet>(idPredmeta);
+
+
+                p.ID_Materijala = o;
+
+                s.Save(p);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+        }
+        public static void SacuvajPredmet(int idPredmeta, int idCudovista)
+        {
+            try
+            {
+                ISession s = DataLayer.GetSession();
+
+                Predmet  p = s.Load<Predmet>(idPredmeta);
+                Cudoviste c = s.Load<Cudoviste>(idCudovista);
+
+                p.Id_cudovista= c;
+
+    
+                s.Save(p);
+                s.Flush();
+                s.Close();
+            }
+            catch (Exception)
+            {
+                //handle exceptions
+                throw;
+            }
+
+        }
+        //--provera za materijal pomocan metoda
+        public static int GetMaterialID(string materijal)
+        {
+            string[] validMaterials = { "Zlato", "Srebro", "Papir", "Metal", "Dijamant" };
+
+            for (int i = 0; i < validMaterials.Length; i++)
+            {
+                if (string.Equals(validMaterials[i], materijal, StringComparison.OrdinalIgnoreCase))
+                    return i + 1;
+            }
+
+            return -1; // Return -1 if the material is invalid
+        }
+
+
+        public static void DodajPredmet(PredmetView predmet, int idCudovista, string materijal)
+        {
+            try
+            {
+                int idMaterijala = GetMaterialID(materijal);
+                if (idMaterijala != -1)
+                {
+
+                    ISession s = DataLayer.GetSession();
+
+                    Predmet p = new Predmet();
+                    Cudoviste c = s.Load<Cudoviste>(idCudovista);
+                    Materijal m = s.Load<Materijal>(idMaterijala);
+                    p.ID = predmet.ID;
+                    p.Tip_Predmeta = predmet.Tip_Predmeta;
+                    p.ID_Materijala = m;
+                    p.Id_cudovista = c;
+                 
+                    s.Save(p);
+                    s.Flush();
+                    s.Close();
+
+                }
+                    
             }
             catch (Exception)
             {

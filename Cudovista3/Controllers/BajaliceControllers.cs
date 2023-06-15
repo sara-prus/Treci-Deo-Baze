@@ -23,7 +23,6 @@ namespace Cudovista3.Controllers
             {
                 // var cudoviste = DataProvajderS.VratiMagijskoCudoviste(cudovisteID);
 
-                DataProvajderS.SacuvajBajalicu(o, cudovisteID);
 
                 return Ok();
             }

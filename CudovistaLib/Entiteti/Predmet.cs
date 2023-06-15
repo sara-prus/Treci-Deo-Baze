@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CudovistaLib.Entiteti
 {
-    public abstract class Predmet
+    public class Predmet
     {
         public virtual int ID { get; set; }
         public virtual Cudoviste Id_cudovista { get; set; }
@@ -16,7 +16,7 @@ namespace CudovistaLib.Entiteti
 
     }
 
-    public class Lobanja : Predmet
+   /* public class Lobanja : Predmet
     {
 
     }
@@ -33,5 +33,5 @@ namespace CudovistaLib.Entiteti
     public class Knjiga : Predmet
     {
 
-    }
+    }*/
 }

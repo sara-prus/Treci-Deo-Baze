@@ -36,7 +36,7 @@ namespace CudovistaLib.DTOs
             Blago = l.Blago;
             this.Borio_se = new PredstavnikView(l.Borio_se);
           
-    }
+        }
 
     }
 }

@@ -12,18 +12,18 @@ namespace CudovistaLib.Mapiranja
 
             Table("MATERIJAL");
 
-            DiscriminateSubClassesOnColumn("Tip_Materijala");
-
-            Id(x => x.ID, "ID").GeneratedBy.SequenceIdentity();
+           /* DiscriminateSubClassesOnColumn("Tip_Materijala");*/
 
 
+            Id(x => x.ID, "ID").GeneratedBy.TriggerIdentity();
+            Map(x => x.Tip_Materijala, "Tip_Materijala");
             HasOne(x => x.Pripada_predmetu).PropertyRef(x => x.ID_Materijala);
 
 
         }
 
     }
-    class ZlatoMapiranja : SubclassMap<Zlato>
+   /* class ZlatoMapiranja : SubclassMap<Zlato>
     {
         public ZlatoMapiranja()
         {
@@ -57,6 +57,6 @@ namespace CudovistaLib.Mapiranja
         {
             DiscriminatorValue("Metal");
         }
-    }
+    }*/
 }
 

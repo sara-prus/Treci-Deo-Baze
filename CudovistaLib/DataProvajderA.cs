@@ -942,7 +942,8 @@ namespace CudovistaLib
         }
         #endregion Pecina
         #region Predstavnik
-        public static List<PredmetView> vratiSvePredstavnike()
+        //----!!neki eror baca kad se buil vidi sta je------
+      /*  public static List<PredmetView> vratiSvePredstavnike()
         {
             List<PredmetView> predstavnici = new List<PredmetView>();
             try
@@ -965,7 +966,7 @@ namespace CudovistaLib
             }
 
             return predstavnici;
-        }
+        }*/
 
         public static void dodajPredstavnika(PredstavnikView o)
         {

@@ -11,7 +11,7 @@ namespace CudovistaLib.DTOs
     {
         public virtual int ID { get; set; }
 
-        public virtual string Tip_Materijala { get; set; }
+        //public virtual string Tip_Materijala { get; set; }
 
         public virtual  PredmetView Pripada_predmetu { get; set; }
 
@@ -20,7 +20,7 @@ namespace CudovistaLib.DTOs
         {
             this.ID = m.ID;
             this.Pripada_predmetu = new PredmetView(m.Pripada_predmetu);
-            this.Tip_Materijala = m.Tip_Materijala;
+           // this.Tip_Materijala = m.Tip_Materijala;
         }
 
         public MaterijalView()
