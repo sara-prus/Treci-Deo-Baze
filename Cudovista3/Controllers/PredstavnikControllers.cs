@@ -14,7 +14,7 @@ namespace Cudovista3.Controllers
       
         
             [HttpGet]
-            [Route("PreuzmiLegende")]
+            [Route("PreuzmiPredstavnike")]
             [ProducesResponseType(StatusCodes.Status400BadRequest)]
             public IActionResult GetSvePredstavnike()
             {
